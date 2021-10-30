@@ -1,39 +1,47 @@
-import unittest
+# Python program to determine whether
+# the number is Armstrong number or not
 
-from armstrong_numbers import is_armstrong_number
+# Function to calculate x raised to
+# the power y
+def power(x, y):
+	
+	if y == 0:
+		return 1
+	if y % 2 == 0:
+		return power(x, y // 2) * power(x, y // 2)
+		
+	return x * power(x, y // 2) * power(x, y // 2)
 
+# Function to calculate order of the number
+def order(x):
 
-# Tests adapted from `problem-specifications//canonical-data.json` @ v1.1.0
+	# Variable to store of the number
+	n = 0
+	while (x != 0):
+		n = n + 1
+		x = x // 10
+		
+	return n
 
-class ArmstrongNumbersTest(unittest.TestCase):
+# Function to check whether the given
+# number is Armstrong number or not
+def isArmstrong(x):
+	
+	n = order(x)
+	temp = x
+	sum1 = 0
+	
+	while (temp != 0):
+		r = temp % 10
+		sum1 = sum1 + power(r, n)
+		temp = temp // 10
 
-    def test_zero_is_an_armstrong_number(self):
-        self.assertIs(is_armstrong_number(0), True)
+	# If condition satisfies
+	return (sum1 == x)
 
-    def test_single_digit_numbers_are_armstrong_numbers(self):
-        self.assertIs(is_armstrong_number(5), True)
+# Driver code
+x = 153
+print(isArmstrong(x))
 
-    def test_there_are_no_two_digit_armstrong_numbers(self):
-        self.assertIs(is_armstrong_number(10), False)
-
-    def test_three_digit_number_that_is_an_armstrong_number(self):
-        self.assertIs(is_armstrong_number(153), True)
-
-    def test_three_digit_number_that_is_not_an_armstrong_number(self):
-        self.assertIs(is_armstrong_number(100), False)
-
-    def test_four_digit_number_that_is_an_armstrong_number(self):
-        self.assertIs(is_armstrong_number(9474), True)
-
-    def test_four_digit_number_that_is_not_an_armstrong_number(self):
-        self.assertIs(is_armstrong_number(9475), False)
-
-    def test_seven_digit_number_that_is_an_armstrong_number(self):
-        self.assertIs(is_armstrong_number(9926315), True)
-
-    def test_seven_digit_number_that_is_not_an_armstrong_number(self):
-        self.assertIs(is_armstrong_number(9926314), False)
-
-
-if __name__ == '__main__':
-    unittest.main()
+x = 1253
+print(isArmstrong(x))
